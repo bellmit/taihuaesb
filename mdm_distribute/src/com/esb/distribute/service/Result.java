@@ -30,12 +30,13 @@ public class Result implements IContextProcessor {
         	mapping.setMdmCode(key);
 			if(value.equals("success")){
                 mapping.setSuccess(true);
-                mapping.setMessage("·Ö·¢³É¹¦");
+                mapping.setMessage("ï¿½Ö·ï¿½ï¿½É¹ï¿½");
 			}else{
                 mapping.setSuccess(false);
                 mapping.setMessage(value);
 			}			
 			mdMapings.add(mapping);
+
         }
         
         JSONObject retVO = returnsFormat(mdMapings);
@@ -64,7 +65,7 @@ public class Result implements IContextProcessor {
 			retVO.setMessage(result.getString("false"));
 		}else{
 			retVO.setSuccess(true);
-			retVO.setMessage("·Ö·¢³É¹¦");
+			retVO.setMessage("ï¿½Ö·ï¿½ï¿½É¹ï¿½");
 		}
 		
 		return JSONObject.fromObject(retVO);
