@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="GBK"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:osgi="http://www.springframework.org/schema/osgi" xmlns:af="http://www.uifda.com/eip/esb/asynframework" xmlns="http://www.springframework.org/schema/beans" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/osgi http://www.springframework.org/schema/osgi/spring-osgi.xsd http://www.uifda.com/eip/esb/asynframework http://www.uifda.com/eip/esb/asynframework/scheduler.xsd">
+  <bean id="processDefCreator" class="com.ufida.eip.pvmengine.ProcessCreator"></bean>
+  <bean id="processDef" factory-bean="processDefCreator" factory-method="createProcessDef">
+    <property name="name" value="com_esb_distribute_flow_DistributeSRM"></property>
+    <property name="version" value="1"></property>
+    <property name="sub" value="false"></property>
+    <property name="useTX" value="false"></property>
+    <property name="persist" value="false"></property>
+    <property name="description" value="DistributeSRM"></property>
+  </bean>
+</beans>

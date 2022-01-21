@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ConnectorConfigs>
+  <ConnectorConfig class="HttpBaseConfigBean">
+    <type>http</type>
+    <name>10.1.3.183</name>
+    <secure>false</secure>
+    <host>10.1.3.183</host>
+    <port>8888</port>
+    <basePath>/cmdm_rest_war/cxf/rs/distribute/distributeService/distributeMd#rest</basePath>
+    <useGateway>false</useGateway>
+    <gatewayId/>
+    <useConnPool>false</useConnPool>
+    <maxConnTotal>100</maxConnTotal>
+    <maxConnPerRoute>20</maxConnPerRoute>
+    <connTimeOut>30000</connTimeOut>
+    <soTimeOut>30000</soTimeOut>
+    <basicAuth>false</basicAuth>
+    <basic__username/>
+    <basic__password/>
+    <bidirectionalAuth>false</bidirectionalAuth>
+    <notes/>
+  </ConnectorConfig>
+  <version>0</version>
+</ConnectorConfigs>

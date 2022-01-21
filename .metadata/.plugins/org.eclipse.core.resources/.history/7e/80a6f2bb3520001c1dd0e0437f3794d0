@@ -1,0 +1,29 @@
+package com.esb.distribute.service;
+
+import java.lang.annotation.Retention;
+import java.lang.annotation.Target;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+
+@Target({ElementType.METHOD, ElementType.FIELD})
+@Retention(RetentionPolicy.RUNTIME)
+public @interface ElementField {
+	/**
+     * 目标实体的key
+     */
+    String key() default "";
+
+    /**
+     * 默认值
+     */
+    String defaultvalue() default "";
+
+    /**
+     * 参照实体的取值对象key
+     */
+    String reference() default "";
+	
+}

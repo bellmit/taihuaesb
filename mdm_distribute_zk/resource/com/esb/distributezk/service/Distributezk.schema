@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://distributezk.esb.com/Distributezk" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://distributezk.esb.com/Distributezk">
+    <annotation>
+        <documentation source="eip_version">65</documentation>
+        <documentation source="oldTargetNameSpace">null</documentation>
+        <documentation source="description">null</documentation>
+    </annotation>
+    <complexType name="distributezkResponse">
+        <sequence>
+            <element name="returnArg" type="string">
+                <annotation>
+                    <documentation source="source.description">null</documentation>
+                    <documentation source="source.displayName">returnArg</documentation>
+                    <documentation source="source.fullClassName">null</documentation>
+                    <documentation source="source.AnnotateeName">null</documentation>
+                    <documentation source="source.LENGTH"/>
+                    <documentation source="source.ifHeader">false</documentation>
+                </annotation>
+            </element>
+        </sequence>
+    </complexType>
+    <element name="distributezkResponse" type="tns:distributezkResponse"/>
+    <complexType name="distributezk">
+        <sequence>
+            <element name="data" type="string">
+                <annotation>
+                    <documentation source="source.description">null</documentation>
+                    <documentation source="source.displayName">data</documentation>
+                    <documentation source="source.fullClassName">null</documentation>
+                    <documentation source="source.AnnotateeName">null</documentation>
+                    <documentation source="source.LENGTH"/>
+                    <documentation source="source.ifHeader">false</documentation>
+                </annotation>
+            </element>
+            <element name="mdType" type="string">
+                <annotation>
+                    <documentation source="source.description">null</documentation>
+                    <documentation source="source.displayName">mdType</documentation>
+                    <documentation source="source.fullClassName">null</documentation>
+                    <documentation source="source.AnnotateeName">null</documentation>
+                    <documentation source="source.LENGTH"/>
+                    <documentation source="source.ifHeader">false</documentation>
+                </annotation>
+            </element>
+        </sequence>
+    </complexType>
+    <element name="distributezk" type="tns:distributezk"/>
+</schema>

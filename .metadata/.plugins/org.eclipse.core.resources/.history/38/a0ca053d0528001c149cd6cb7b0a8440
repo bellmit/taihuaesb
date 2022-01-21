@@ -1,0 +1,32 @@
+package com.esb.distribute.service;
+
+import mdm_distribute_nwesrm.ElementFieldService;
+
+import org.json.JSONObject;
+
+import com.alibaba.fastjson.JSONArray;
+import com.ufida.eip.core.MessageContext;
+import com.ufida.eip.exception.EIPException;
+import com.ufida.eip.java.IContextProcessor;
+import commonj.sdo.DataObject;
+
+public class DistributeSRM implements IContextProcessor {
+
+	@Override
+	public String handleMessageContext(MessageContext arg0) throws EIPException {
+		// TODO Auto-generated method stub
+		DataObject body = arg0.getBody();
+		//获取主数据参数
+		String data = body.getString("data");
+		JSONObject obj = new JSONObject(data);
+		String mdType = obj.getString("mdType");
+	 	String masterData = obj.getString("masterData");
+	 	JSONArray picArray = JSONArray.parseArray(masterData);
+		
+	 	ElementFieldService elementfiled = new ElementFieldService();
+	 	String filed = elementfiled.exchangeParam(picArray,mdType);
+		
+		return null;
+	}
+
+}

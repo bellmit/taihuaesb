@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Delete resource &apos;mdm_distribute_weChat&apos;" deleteContents="false" description="Delete resource &apos;mdm_distribute_weChat&apos;" element1="/mdm_distribute_weChat" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="1" stamp="1632531876308"/>
+</session>

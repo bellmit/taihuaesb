@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ConnectorConfigs>
+  <ConnectorConfig class="HttpBaseConfigBean">
+    <type>http</type>
+    <name>部门下发</name>
+    <secure>false</secure>
+    <host>10.1.3.143</host>
+    <port>8090</port>
+    <basePath>/api/receive/dep/zk</basePath>
+    <useGateway>false</useGateway>
+    <gatewayId/>
+    <useConnPool>false</useConnPool>
+    <maxConnTotal>100</maxConnTotal>
+    <maxConnPerRoute>20</maxConnPerRoute>
+    <connTimeOut>30000</connTimeOut>
+    <soTimeOut>30000</soTimeOut>
+    <basicAuth>false</basicAuth>
+    <basic__username/>
+    <basic__password/>
+    <bidirectionalAuth>false</bidirectionalAuth>
+    <notes/>
+  </ConnectorConfig>
+  <ConnectorConfig class="HttpBaseConfigBean">
+    <type>http</type>
+    <name>人员</name>
+    <secure>false</secure>
+    <host>10.1.3.143</host>
+    <port>8090</port>
+    <basePath>/api/receive/user/zk</basePath>
+    <useGateway>false</useGateway>
+    <gatewayId/>
+    <useConnPool>false</useConnPool>
+    <maxConnTotal>100</maxConnTotal>
+    <maxConnPerRoute>20</maxConnPerRoute>
+    <connTimeOut>30000</connTimeOut>
+    <soTimeOut>30000</soTimeOut>
+    <basicAuth>false</basicAuth>
+    <basic__username/>
+    <basic__password/>
+    <bidirectionalAuth>false</bidirectionalAuth>
+    <notes/>
+  </ConnectorConfig>
+  <version>0</version>
+</ConnectorConfigs>

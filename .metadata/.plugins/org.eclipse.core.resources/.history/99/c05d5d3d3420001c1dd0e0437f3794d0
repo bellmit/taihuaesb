@@ -1,0 +1,59 @@
+package com.esb.distribute.service;
+
+import java.lang.reflect.Field;
+
+import org.apache.commons.lang.StringUtils;
+import org.json.JSONObject;
+
+import com.alibaba.fastjson.JSONArray;
+import com.ufida.eip.core.MessageContext;
+import com.ufida.eip.exception.EIPException;
+import com.ufida.eip.java.IContextProcessor;
+
+public class ElementFieldService {
+
+	public String exchangeParam(JSONArray picArray){
+		System.out.println(picArray);
+		for(Object object : picArray){
+			JSONObject jsonObject = (JSONObject)object;
+			JSONObject resultJson = exchange(DeptVO.class,jsonObject);
+		}
+		
+		return null;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	public JSONObject exchange(Class<?> targetCls, JSONObject jsonObject){
+		Field[] targetFields = targetCls.getDeclaredFields();
+        JSONObject target = new JSONObject();
+        
+        for (Field field : targetFields) {
+        	ElementField elementField = field.getAnnotation(ElementField.class);
+            if (null == elementField) continue;
+
+            //  Ù–‘√˚
+            String filedName = field.getName();
+            // key
+            String key = elementField.key();
+            
+            String keyName = StringUtils.isEmpty(key) ? filedName : key;
+            
+            Object value = jsonObject.get(filedName);
+            
+            target.put(keyName, value);
+        }
+		
+		return null;
+		
+	}
+	
+	
+	
+
+}

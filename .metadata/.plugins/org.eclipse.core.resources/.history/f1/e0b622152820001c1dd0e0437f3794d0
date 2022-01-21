@@ -1,0 +1,15 @@
+package com.esb.distribute.service;
+
+import com.ufida.eip.core.MessageContext;
+import com.ufida.eip.exception.EIPException;
+import com.ufida.eip.java.IContextProcessor;
+
+public class Distribute implements IContextProcessor {
+
+	@Override
+	public String handleMessageContext(MessageContext arg0) throws EIPException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

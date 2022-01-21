@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="GBK"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:osgi="http://www.springframework.org/schema/osgi" xmlns:af="http://www.uifda.com/eip/esb/asynframework" xmlns="http://www.springframework.org/schema/beans" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/osgi http://www.springframework.org/schema/osgi/spring-osgi.xsd http://www.uifda.com/eip/esb/asynframework http://www.uifda.com/eip/esb/asynframework/scheduler.xsd">
+  <bean id="processDefCreator" class="com.ufida.eip.pvmengine.ProcessCreator"></bean>
+  <bean id="processDef" factory-bean="processDefCreator" factory-method="createProcessDef">
+    <property name="name" value="com_esb_distributezk_flow_Distributezk"></property>
+    <property name="version" value="14"></property>
+    <property name="sub" value="false"></property>
+    <property name="useTX" value="false"></property>
+    <property name="persist" value="false"></property>
+    <property name="description" value="Distributezk"></property>
+    <property name="activityDefList">
+      <list>
+        <ref bean="node2"></ref>
+        <ref bean="node3"></ref>
+        <ref bean="node4"></ref>
+        <ref bean="node8"></ref>
+        <ref bean="node9"></ref>
+        <ref bean="node15"></ref>
+      </list>
+    </property>
+  </bean>
+  <bean id="node2" factory-bean="processDefCreator" factory-method="createJavaActivity">
+    <property name="fullClassName" value="com.esb.distributezk.service.DistributeService"></property>
+    <property name="name" value="node2"></property>
+    <property name="displayName" value="java结点"></property>
+    <property name="x" value="289"></property>
+    <property name="y" value="133"></property>
+    <property name="transitionDefList">
+      <list>
+        <bean factory-bean="processDefCreator" factory-method="createTransitionDef">
+          <property name="to" value="node3"></property>
+          <property name="order" value="-1"></property>
+          <property name="textX" value="0"></property>
+          <property name="textY" value="0"></property>
+          <property name="sourceAnchor" value="right"></property>
+          <property name="targetAnchor" value="left"></property>
+        </bean>
+      </list>
+    </property>
+  </bean>
+  <bean id="node3" factory-bean="processDefCreator" factory-method="createDecisionConditionActivity">
+    <property name="name" value="node3"></property>
+    <property name="displayName" value="路径决策"></property>
+    <property name="x" value="530"></property>
+    <property name="y" value="137"></property>
+    <property name="transitionDefList">
+      <list>
+        <bean factory-bean="processDefCreator" factory-method="createTransitionWithConditionDef">
+          <property name="expression" ref="booleanExp93631547914800"></property>
+          <property name="order" value="-1"></property>
+          <property name="to" value="node4"></property>
+          <property name="textX" value="0"></property>
+          <property name="textY" value="0"></property>
+          <property name="sourceAnchor" value="right"></property>
+          <property name="targetAnchor" value="left"></property>
+        </bean>
+        <bean factory-bean="processDefCreator" factory-method="createTransitionWithConditionDef">
+          <property name="expression" ref="booleanExp360702098600300"></property>
+          <property name="order" value="1"></property>
+          <property name="to" value="node15"></property>
+          <property name="textX" value="0"></property>
+          <property name="textY" value="0"></property>
+          <property name="sourceAnchor" value="right"></property>
+          <property name="targetAnchor" value="left"></property>
+        </bean>
+      </list>
+    </property>
+    <property name="parentIds">
+      <list>
+        <value>node2</value>
+      </list>
+    </property>
+  </bean>
+  <bean id="node4" class="com.ufida.eip.http.ref.HttpRequestBinding">
+    <property name="httpConfig" value="部门下发"></property>
+    <property name="url" value=""></property>
+    <property name="requestMethod" value="POST"></property>
+    <property name="wsdlPath" value="com/esb/distributezk/Distributezk.api"></property>
+    <property name="methodName" value="distributezk"></property>
+    <property name="targetNamespace" value="http://distributezk.esb.com/Distributezk"></property>
+    <property name="serviceConfig">
+      <bean class="com.ufida.eip.arg.service.support.DefaultServiceConfig">
+        <property name="foldArgs" value="false"></property>
+        <property name="serviceFoldArgConfig">
+          <bean class="com.ufida.eip.arg.service.support.DefaultServiceArgConfig">
+            <property name="transportType" value="NODATA"></property>
+            <property name="transportFormat" value="OBJECT"></property>
+            <property name="defaultValue" value=""></property>
+            <property name="charSet" value="UTF-8"></property>
+            <property name="atomType" value="true"></property>
+            <property name="uapmark" value="false"></property>
+            <property name="uapArgConfStr" value=""></property>
+          </bean>
+        </property>
+        <property name="serviceArgConfigList">
+          <list>
+            <bean class="com.ufida.eip.arg.service.support.DefaultServiceArgConfig">
+              <property name="argName" value="data"></property>
+              <property name="transportType" value="httpBodyData"></property>
+              <property name="transportFormat" value="JSON"></property>
+              <property name="defaultValue" value=""></property>
+              <property name="charSet" value="UTF-8"></property>
+              <property name="atomType" value="true"></property>
+              <property name="uapmark" value="false"></property>
+              <property name="uapArgConfStr" value=""></property>
+            </bean>
+            <bean class="com.ufida.eip.arg.service.support.DefaultServiceArgConfig">
+              <property name="argName" value="mdType"></property>
+              <property name="transportType" value="NODATA"></property>
+              <property name="transportFormat" value="OBJECT"></property>
+              <property name="defaultValue" value=""></property>
+              <property name="charSet" value="UTF-8"></property>
+              <property name="atomType" value="true"></property>
+              <property name="uapmark" value="false"></property>
+              <property name="uapArgConfStr" value=""></property>
+            </bean>
+          </list>
+        </property>
+        <property name="serviceReturnConfig">
+          <bean class="com.ufida.eip.arg.service.support.DefaultServiceReturnConfig">
+            <property name="transportFormat" value="TEXT"></property>
+          </bean>
+        </property>
+      </bean>
+    </property>
+    <property name="param_return" value="[[argName=data, transportType=httpBodyData, transportFormat=JSON], [argName=mdType, transportType=NODATA, transportFormat=OBJECT]]"></property>
+    <property name="targetPath" value="node4"></property>
+    <property name="addMethodInfo" value="false"></property>
+    <property name="addMethod2Url" value="false"></property>
+    <property name="transactionOperationType" value="PROPAGATION_NOT_SUPPORTED"></property>
+    <property name="undoType" value="UNDOCLASS"></property>
+    <property name="name" value="node4"></property>
+    <property name="displayName" value="部门"></property>
+    <property name="x" value="770"></property>
+    <property name="y" value="25"></property>
+    <property name="transitionDefList">
+      <list>
+        <bean factory-bean="processDefCreator" factory-method="createTransitionDef">
+          <property name="to" value="node8"></property>
+          <property name="order" value="-1"></property>
+          <property name="textX" value="0"></property>
+          <property name="textY" value="0"></property>
+          <property name="sourceAnchor" value="right"></property>
+          <property name="targetAnchor" value="left"></property>
+        </bean>
+      </list>
+    </property>
+    <property name="parentIds">
+      <list>
+        <value>node3</value>
+      </list>
+    </property>
+  </bean>
+  <bean id="node8" factory-bean="processDefCreator" factory-method="createJavaActivity">
+    <property name="fullClassName" value="com.esb.distributezk.service.Result"></property>
+    <property name="name" value="node8"></property>
+    <property name="displayName" value="java结点"></property>
+    <property name="x" value="1018"></property>
+    <property name="y" value="143"></property>
+    <property name="transitionDefList">
+      <list>
+        <bean factory-bean="processDefCreator" factory-method="createTransitionDef">
+          <property name="to" value="node9"></property>
+          <property name="order" value="-1"></property>
+          <property name="textX" value="0"></property>
+          <property name="textY" value="0"></property>
+          <property name="sourceAnchor" value="right"></property>
+          <property name="targetAnchor" value="left"></property>
+        </bean>
+      </list>
+    </property>
+    <property name="parentIds">
+      <list>
+        <value>node4</value>
+        <value>node15</value>
+      </list>
+    </property>
+  </bean>
+  <bean id="node9" factory-bean="processDefCreator" factory-method="createEndActivity">
+    <property name="expression" ref="booleanExp93619043560200"></property>
+    <property name="name" value="node9"></property>
+    <property name="displayName" value="结束"></property>
+    <property name="x" value="1162"></property>
+    <property name="y" value="141"></property>
+    <property name="parentIds">
+      <list>
+        <value>node8</value>
+      </list>
+    </property>
+  </bean>
+  <bean id="booleanExp93631547914800" class="com.ufida.eip.pvmengine.internal.expression.FormulaExpression">
+    <property name="expression" value="messageContext.body.mdType==&quot;department&quot;"></property>
+  </bean>
+  <bean id="booleanExp93633466781400" class="com.ufida.eip.pvmengine.internal.expression.FormulaExpression">
+    <property name="expression" value="messageContext.body.mdType==&quot;person&quot;"></property>
+  </bean>
+  <bean id="booleanExp93619043560200" class="com.ufida.eip.pvmengine.internal.expression.FormulaExpression">
+    <property name="expression" value="messageContext.body.returnArg"></property>
+  </bean>
+  <bean id="node15" factory-bean="processDefCreator" factory-method="createJavaActivity">
+    <property name="fullClassName" value="HttpPostZk"></property>
+    <property name="name" value="node15"></property>
+    <property name="displayName" value="java结点"></property>
+    <property name="x" value="781"></property>
+    <property name="y" value="221"></property>
+    <property name="transitionDefList">
+      <list>
+        <bean factory-bean="processDefCreator" factory-method="createTransitionDef">
+          <property name="to" value="node8"></property>
+          <property name="order" value="-1"></property>
+          <property name="textX" value="0"></property>
+          <property name="textY" value="0"></property>
+          <property name="sourceAnchor" value="right"></property>
+          <property name="targetAnchor" value="left"></property>
+        </bean>
+      </list>
+    </property>
+    <property name="parentIds">
+      <list>
+        <value>node3</value>
+      </list>
+    </property>
+  </bean>
+  <bean id="booleanExp360702098600300" class="com.ufida.eip.pvmengine.internal.expression.FormulaExpression">
+    <property name="expression" value="messageContext.body.mdType==&quot;person&quot;"></property>
+  </bean>
+</beans>

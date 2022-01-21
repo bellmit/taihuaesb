@@ -1,0 +1,146 @@
+package com.yonyou.esb.ncc.xml;
+
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+
+import net.sf.json.JSONObject;
+
+import org.dom4j.Attribute;
+import org.dom4j.Document;
+import org.dom4j.DocumentHelper;
+import org.dom4j.Element;
+import org.json.JSONException;
+
+
+
+
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
+import com.yonyou.esb.ncc.http.util.HttpUtil;
+import com.yonyou.esb.ncc.http.util.Table;
+import com.yonyou.esb.ncc.vo.dept.NCCDeptVO;
+
+
+
+/**
+ * 部门传NCC（拼xml）
+ * @author guxk
+ *
+ */
+public class DeptsXml{
+
+	/**
+	 * 部门传NCC
+	 * @param system
+	 * @param url
+	 * @param free
+	 * @throws JSONException
+	 */
+	public String sendDepts(String system , String url,String params ) throws JSONException{
+		//本次任务开始
+		//NCCDeptVO nccdeptvo= (NCCDeptVO) JSON.parse(params);
+		NCCDeptVO[] nccDeptVOs= JSON.parseObject(params, new TypeReference<NCCDeptVO[]>(){});
+		int sum = nccDeptVOs.length;
+		System.out.println("开始向"+system+"同步"+Table.partsname);
+		//未同步的总数
+		System.out.println("本次共同步的"+Table.partsname+sum+"条");
+		//一条一条调用外部交换平台接口
+		Document doc = DocumentHelper.createDocument();
+		
+		
+		String[] s = new String[sum];
+		JSONObject object = new JSONObject();
+		//"mdMappings":[{"mdmCode":"对应mdm_code","entityCode":"对应mdType","busiDataId":"外部系统主键"}]
+		
+		for(int k = 0 ; k < sum ; k++){
+			String flag = syncOneMaterial(nccDeptVOs[k] , url);
+			if(JSON.parseObject(flag).get("returnState") != null && (Integer)JSON.parseObject(flag).get("returnState") == 1){
+				return flag;
+			}
+			s[k] = flag;
+		}
+		System.out.println("本次向"+system+"同步"+Table.partsname+"结束");
+		object.put("mdMappings", s);
+		object.put("returnState", 2);
+		return object.toString();
+	}
+	
+	/**
+	 * 拼xml同步ncc
+	 * @param js
+	 * @throws JSONException 
+	 */
+	public String syncOneMaterial(NCCDeptVO nccDeptVO, String url )throws JSONException{
+		Document doc = DocumentHelper.createDocument();
+		
+		Element ufinterface = doc.addElement("ufinterface");
+        ufinterface.addAttribute("account", NCCParameter.account);
+        ufinterface.addAttribute("billtype", NCCParameter.billtype);
+        ufinterface.addAttribute("groupcode", NCCParameter.groupcode);
+        ufinterface.addAttribute("isexchange", NCCParameter.isexchange);
+        ufinterface.addAttribute("replace", NCCParameter.replace);
+        ufinterface.addAttribute("sender",  NCCParameter.sender);
+        ufinterface.addAttribute("operator",  NCCParameter.operator);
+        
+        Element bill = ufinterface.addElement("bill");
+        bill.addAttribute("id", nccDeptVO.getPk_mdm()==null?"":nccDeptVO.getPk_mdm());
+        
+        Element billhead = bill.addElement("billhead");
+        
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+        String date = df.format(new Date());
+
+        billhead.addElement("code").setText(nccDeptVO.getCode()==null?"":nccDeptVO.getCode());
+        billhead.addElement("name").setText(nccDeptVO.getName()==null?"":nccDeptVO.getName());
+        billhead.addElement("shortname").setText(nccDeptVO.getShortname()==null?"":nccDeptVO.getShortname());
+        billhead.addElement("pk_group").setText(NCCParameter.groupname);
+        billhead.addElement("pk_org").setText(nccDeptVO.getCompanyCode_entity().getName()==null?"":nccDeptVO.getCompanyCode_entity().getName());
+        billhead.addElement("pk_fatherorg").setText(nccDeptVO.getParentCode_entity().getName()==null?"":nccDeptVO.getParentCode_entity().getName());
+        billhead.addElement("depttype").setText("0");
+        billhead.addElement("deptlevel").setText(nccDeptVO.getDeptlevel()==null?"":nccDeptVO.getDeptlevel());
+        billhead.addElement("createdate").setText(date);
+        billhead.addElement("hrcanceled").setText("N");
+        billhead.addElement("isretail").setText("N");
+        billhead.addElement("orgtype13").setText("Y");
+        billhead.addElement("orgtype17").setText("N");
+
+        billhead.addElement("displayorder").setText("999");     
+        billhead.addElement("memo").setText("");
+        billhead.addElement("enablestate").setText("已启用".equals(nccDeptVO.getEnableState_name())?"2":"1");
+        
+        String sync_customer_xml = doc.asXML();
+        
+        HttpUtil httpUtil = new HttpUtil();
+        url = url + "/service/XChangeServlet?account=" + NCCParameter.account + "&groupcode=" + NCCParameter.groupcode;
+        String result = httpUtil.httpPostForXml(url, sync_customer_xml);
+        
+        Document document = null;
+		try {
+			document = DocumentHelper.parseText(result);
+//		    result = document.getElementsByTagName("resultdescription").item(0)
+//		     .getTextContent();
+
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+        Element root = document.getRootElement();
+		List<Element> listElement = root.elements();// 获得根节点下面所有的子节点
+		String bdocid = listElement.get(0).element("bdocid").getText();
+		String resultdescription = listElement.get(0).element("resultdescription").getText();
+		String content = listElement.get(0).element("content").getText();
+		
+		
+		Attribute attr = root.attribute("successful");
+		if(attr.getValue().equals("Y")){
+			return "{\"mdmCode\":\""+nccDeptVO.getMdm_code()+"\",\"entityCode\":\"department\""+",\"busiDataId\":\""+bdocid+"\"}";
+		}else{
+			return "{\"returnState\":1,\"resultdescription\":\""+resultdescription+"\"}";
+			
+		}
+		
+	}
+
+}

@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="GBK"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:osgi="http://www.springframework.org/schema/osgi" xmlns:af="http://www.uifda.com/eip/esb/asynframework" xmlns="http://www.springframework.org/schema/beans" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/osgi http://www.springframework.org/schema/osgi/spring-osgi.xsd http://www.uifda.com/eip/esb/asynframework http://www.uifda.com/eip/esb/asynframework/scheduler.xsd">
+  <bean id="processDefCreator" class="com.ufida.eip.pvmengine.ProcessCreator"></bean>
+  <bean id="processDef" factory-bean="processDefCreator" factory-method="createProcessDef">
+    <property name="name" value="com_esb_distribute_flow_Distribute"></property>
+    <property name="version" value="14"></property>
+    <property name="sub" value="false"></property>
+    <property name="useTX" value="false"></property>
+    <property name="persist" value="false"></property>
+    <property name="description" value="Distribute"></property>
+    <property name="activityDefList">
+      <list>
+        <ref bean="node2"></ref>
+        <ref bean="node3"></ref>
+        <ref bean="node4"></ref>
+        <ref bean="node5"></ref>
+        <ref bean="node6"></ref>
+        <ref bean="node18"></ref>
+      </list>
+    </property>
+  </bean>
+  <bean id="node2" factory-bean="processDefCreator" factory-method="createJavaActivity">
+    <property name="fullClassName" value="com.esb.distribute.service.Distribute"></property>
+    <property name="name" value="node2"></property>
+    <property name="displayName" value="java结点"></property>
+    <property name="x" value="253"></property>
+    <property name="y" value="146"></property>
+    <property name="transitionDefList">
+      <list>
+        <bean factory-bean="processDefCreator" factory-method="createTransitionDef">
+          <property name="to" value="node3"></property>
+          <property name="order" value="-1"></property>
+          <property name="textX" value="0"></property>
+          <property name="textY" value="0"></property>
+          <property name="sourceAnchor" value="right"></property>
+          <property name="targetAnchor" value="left"></property>
+        </bean>
+      </list>
+    </property>
+  </bean>
+  <bean id="node3" factory-bean="processDefCreator" factory-method="createDecisionConditionActivity">
+    <property name="name" value="node3"></property>
+    <property name="displayName" value="路径决策"></property>
+    <property name="x" value="432"></property>
+    <property name="y" value="142"></property>
+    <property name="transitionDefList">
+      <list>
+        <bean factory-bean="processDefCreator" factory-method="createTransitionWithConditionDef">
+          <property name="expression" ref="booleanExp352844874208100"></property>
+          <property name="order" value="0"></property>
+          <property name="to" value="node4"></property>
+          <property name="textX" value="0"></property>
+          <property name="textY" value="0"></property>
+          <property name="sourceAnchor" value="right"></property>
+          <property name="targetAnchor" value="left"></property>
+        </bean>
+      </list>
+    </property>
+    <property name="parentIds">
+      <list>
+        <value>node2</value>
+      </list>
+    </property>
+  </bean>
+  <bean id="node4" class="com.ufida.eip.http.ref.HttpRequestBinding">
+    <property name="httpConfig" value="部门下发"></property>
+    <property name="url" value=""></property>
+    <property name="requestMethod" value="POST"></property>
+    <property name="wsdlPath" value="com/esb/distribute/service/Distribute.api"></property>
+    <property name="methodName" value="distribute"></property>
+    <property name="targetNamespace" value="http://service.distribute.esb.com/Distribute"></property>
+    <property name="serviceConfig">
+      <bean class="com.ufida.eip.arg.service.support.DefaultServiceConfig">
+        <property name="foldArgs" value="false"></property>
+        <property name="serviceFoldArgConfig">
+          <bean class="com.ufida.eip.arg.service.support.DefaultServiceArgConfig">
+            <property name="transportType" value="NODATA"></property>
+            <property name="transportFormat" value="OBJECT"></property>
+            <property name="defaultValue" value=""></property>
+            <property name="charSet" value="UTF-8"></property>
+            <property name="atomType" value="true"></property>
+            <property name="uapmark" value="false"></property>
+            <property name="uapArgConfStr" value=""></property>
+          </bean>
+        </property>
+        <property name="serviceArgConfigList">
+          <list>
+            <bean class="com.ufida.eip.arg.service.support.DefaultServiceArgConfig">
+              <property name="argName" value="masterData"></property>
+              <property name="transportType" value="httpBodyData"></property>
+              <property name="transportFormat" value="JSON"></property>
+              <property name="defaultValue" value=""></property>
+              <property name="charSet" value="UTF-8"></property>
+              <property name="atomType" value="true"></property>
+              <property name="uapmark" value="false"></property>
+              <property name="uapArgConfStr" value=""></property>
+            </bean>
+            <bean class="com.ufida.eip.arg.service.support.DefaultServiceArgConfig">
+              <property name="argName" value="mdType"></property>
+              <property name="transportType" value="NODATA"></property>
+              <property name="transportFormat" value="OBJECT"></property>
+              <property name="defaultValue" value=""></property>
+              <property name="charSet" value="UTF-8"></property>
+              <property name="atomType" value="true"></property>
+              <property name="uapmark" value="false"></property>
+              <property name="uapArgConfStr" value=""></property>
+            </bean>
+          </list>
+        </property>
+        <property name="serviceReturnConfig">
+          <bean class="com.ufida.eip.arg.service.support.DefaultServiceReturnConfig">
+            <property name="transportFormat" value="TEXT"></property>
+          </bean>
+        </property>
+      </bean>
+    </property>
+    <property name="param_return" value="[[argName=masterData, transportType=httpBodyData, transportFormat=JSON], [argName=mdType, transportType=NODATA, transportFormat=OBJECT]]"></property>
+    <property name="targetPath" value="node4"></property>
+    <property name="addMethodInfo" value="false"></property>
+    <property name="addMethod2Url" value="false"></property>
+    <property name="transactionOperationType" value="PROPAGATION_NOT_SUPPORTED"></property>
+    <property name="undoType" value="UNDOCLASS"></property>
+    <property name="name" value="node4"></property>
+    <property name="displayName" value="部门下发"></property>
+    <property name="x" value="749"></property>
+    <property name="y" value="16"></property>
+    <property name="transitionDefList">
+      <list>
+        <bean factory-bean="processDefCreator" factory-method="createTransitionDef">
+          <property name="to" value="node5"></property>
+          <property name="order" value="-1"></property>
+          <property name="textX" value="0"></property>
+          <property name="textY" value="0"></property>
+          <property name="sourceAnchor" value="right"></property>
+          <property name="targetAnchor" value="left"></property>
+        </bean>
+      </list>
+    </property>
+    <property name="parentIds">
+      <list>
+        <value>node3</value>
+      </list>
+    </property>
+  </bean>
+  <bean id="booleanExp351849989893500" class="com.ufida.eip.pvmengine.internal.expression.FormulaExpression">
+    <property name="expression" value="messageContext.body.returnArg"></property>
+  </bean>
+  <bean id="node5" factory-bean="processDefCreator" factory-method="createJavaActivity">
+    <property name="fullClassName" value="com.esb.distribute.service.Result"></property>
+    <property name="name" value="node5"></property>
+    <property name="displayName" value="java结点"></property>
+    <property name="x" value="1170"></property>
+    <property name="y" value="122"></property>
+    <property name="transitionDefList">
+      <list>
+        <bean factory-bean="processDefCreator" factory-method="createTransitionDef">
+          <property name="to" value="node6"></property>
+          <property name="order" value="-1"></property>
+          <property name="textX" value="0"></property>
+          <property name="textY" value="0"></property>
+          <property name="sourceAnchor" value="right"></property>
+          <property name="targetAnchor" value="left"></property>
+        </bean>
+      </list>
+    </property>
+    <property name="parentIds">
+      <list>
+        <value>node4</value>
+      </list>
+    </property>
+  </bean>
+  <bean id="node6" factory-bean="processDefCreator" factory-method="createEndActivity">
+    <property name="expression" ref="booleanExp351849989893500"></property>
+    <property name="name" value="node6"></property>
+    <property name="displayName" value="结束"></property>
+    <property name="x" value="1378"></property>
+    <property name="y" value="124"></property>
+    <property name="parentIds">
+      <list>
+        <value>node5</value>
+      </list>
+    </property>
+  </bean>
+  <bean id="booleanExp352618230363800" class="com.ufida.eip.pvmengine.internal.expression.FormulaExpression">
+    <property name="expression" value="messageContext.body.mdType==&quot;department&quot;"></property>
+  </bean>
+  <bean id="booleanExp352844874208100" class="com.ufida.eip.pvmengine.internal.expression.FormulaExpression">
+    <property name="expression" value="messageContext.body.mdType==&quot;department&quot;"></property>
+  </bean>
+  <bean id="flow.service.binding" class="com.ufida.eip.comp.service.support.FlowComponentServiceImpl">
+    <property name="bindingMap">
+      <map>
+        <entry key="REST">
+          <bean class="com.ufida.eip.rest.service.RestServiceBinding">
+            <property name="serviceDefinition">
+              <bean class="com.ufida.eip.rest.service.RestServiceDefinition">
+                <property name="methodDefinitonList">
+                  <list>
+                    <bean class="com.ufida.eip.comp.definition.service.api.abs.MethodDefinition">
+                      <property name="methodName" value="distribute"></property>
+                      <property name="path" value="/distribute"></property>
+                      <property name="httpMethod" value="POST"></property>
+                      <property name="wrapperInputParamDefinition">
+                        <bean class="com.ufida.eip.comp.definition.service.api.abs.WrapperInputParamDefinition">
+                          <property name="wrapperName" value="参数"></property>
+                          <property name="paramDefinition">
+                            <list>
+                              <bean class="com.ufida.eip.comp.definition.service.api.abs.ParamDefinition">
+                                <property name="fullclassname" value="java.lang.String"></property>
+                                <property name="paramName" value="data"></property>
+                                <property name="annotationparamtype" value="BODY"></property>
+                                <property name="annotationparamName" value="data"></property>
+                                <property name="consumes" value="JSON"></property>
+                                <property name="methodName" value="distribute"></property>
+                              </bean>
+                              <bean class="com.ufida.eip.comp.definition.service.api.abs.ParamDefinition">
+                                <property name="fullclassname" value="java.lang.String"></property>
+                                <property name="paramName" value="mdType"></property>
+                                <property name="annotationparamtype" value="QueryParam"></property>
+                                <property name="annotationparamName" value="mdType"></property>
+                                <property name="consumes" value="TEXT"></property>
+                                <property name="methodName" value="distribute"></property>
+                              </bean>
+                            </list>
+                          </property>
+                        </bean>
+                      </property>
+                      <property name="wrapperOutputParamDefinition">
+                        <bean class="com.ufida.eip.comp.definition.service.api.abs.WrapperOutputParamDefinition">
+                          <property name="wrapperName" value="返回参数"></property>
+                          <property name="outputParam">
+                            <bean class="com.ufida.eip.comp.definition.service.api.abs.OutputParamDefinition">
+                              <property name="outputfullclassname" value="java.lang.String"></property>
+                              <property name="outputName" value="returnArg"></property>
+                              <property name="produces" value="TEXT"></property>
+                              <property name="methodName" value="distribute"></property>
+                            </bean>
+                          </property>
+                        </bean>
+                      </property>
+                    </bean>
+                  </list>
+                </property>
+                <property name="url" value="/distributeSRM"></property>
+                <property name="fullclassname" value="Distribute"></property>
+                <property name="mediaType" value="xml"></property>
+                <property name="asynHandle" value="false"></property>
+                <property name="saveOriginalData" value="false"></property>
+                <property name="controled" value="true"></property>
+                <property name="operationConfigMap">
+                  <map>
+                    <entry key="distribute">
+                      <bean class="com.ufida.eip.arg.service.support.DefaultServiceConfig">
+                        <property name="foldArgs" value="false"></property>
+                        <property name="serviceFoldArgConfig">
+                          <bean class="com.ufida.eip.arg.service.support.DefaultServiceArgConfig">
+                            <property name="argName" value="arg0"></property>
+                            <property name="transportType" value="NODATA"></property>
+                            <property name="transportFormat" value="OBJECT"></property>
+                            <property name="defaultValue" value=""></property>
+                            <property name="charSet" value="UTF-8"></property>
+                            <property name="atomType" value="true"></property>
+                            <property name="uapmark" value="false"></property>
+                            <property name="uapArgConfStr" value=""></property>
+                          </bean>
+                        </property>
+                        <property name="serviceArgConfigList">
+                          <list>
+                            <bean class="com.ufida.eip.arg.service.support.DefaultServiceArgConfig">
+                              <property name="argName" value="mdType"></property>
+                              <property name="transportType" value="NODATA"></property>
+                              <property name="transportFormat" value="TEXT"></property>
+                              <property name="defaultValue" value=""></property>
+                              <property name="charSet" value="UTF-8"></property>
+                              <property name="atomType" value="true"></property>
+                              <property name="uapmark" value="false"></property>
+                              <property name="uapArgConfStr" value=""></property>
+                            </bean>
+                            <bean class="com.ufida.eip.arg.service.support.DefaultServiceArgConfig">
+                              <property name="argName" value="data"></property>
+                              <property name="transportType" value="NODATA"></property>
+                              <property name="transportFormat" value="TEXT"></property>
+                              <property name="defaultValue" value=""></property>
+                              <property name="charSet" value="UTF-8"></property>
+                              <property name="atomType" value="true"></property>
+                              <property name="uapmark" value="false"></property>
+                              <property name="uapArgConfStr" value=""></property>
+                            </bean>
+                          </list>
+                        </property>
+                        <property name="serviceReturnConfig">
+                          <bean class="com.ufida.eip.arg.service.support.DefaultServiceReturnConfig">
+                            <property name="transportFormat" value="TEXT"></property>
+                          </bean>
+                        </property>
+                      </bean>
+                    </entry>
+                  </map>
+                </property>
+              </bean>
+            </property>
+          </bean>
+        </entry>
+      </map>
+    </property>
+    <property name="serviceEndpointMap">
+      <map>
+        <entry key="distribute">
+          <bean class="com.ufida.eip.comp.service.support.DefaultServiceEndpoint">
+            <property name="transactionType" value="ANY"></property>
+            <property name="transactionOperationType" value="PROPAGATION_NOT_SUPPORTED"></property>
+          </bean>
+        </entry>
+      </map>
+    </property>
+    <property name="serviceName" value="com.esb.distribute.service.Distribute"></property>
+    <property name="version" value="1.0.0"></property>
+    <property name="wsdlPath" value="com/esb/distribute/service/Distribute.api"></property>
+  </bean>
+  <bean id="node18" factory-bean="processDefCreator" factory-method="createAPIRouterActivity">
+    <property name="fullPath" value="com.esb.distribute.service.Distribute"></property>
+    <property name="interfaceName" value="com.esb.distribute.service.Distribute"></property>
+    <property name="staticFlowComponentService" ref="flow.service.binding"></property>
+    <property name="methodsUsed">
+      <list>
+        <bean factory-bean="processDefCreator" factory-method="createMethodUsedDef">
+          <property name="name" value="distribute"></property>
+        </bean>
+      </list>
+    </property>
+    <property name="targetNamespace" value="http://service.distribute.esb.com/Distribute"></property>
+    <property name="initial" value="true"></property>
+    <property name="name" value="node18"></property>
+    <property name="displayName" value="Distribute"></property>
+    <property name="x" value="76"></property>
+    <property name="y" value="167"></property>
+  </bean>
+</beans>

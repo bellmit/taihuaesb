@@ -1,0 +1,82 @@
+package com.esb.distribute.service;
+
+import java.lang.reflect.Field;
+
+import org.apache.commons.collections.MapUtils;
+import org.apache.commons.lang.StringUtils;
+
+
+
+
+
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import com.ufida.eip.core.MessageContext;
+import com.ufida.eip.exception.EIPException;
+import com.ufida.eip.java.IContextProcessor;
+
+public class ElementFieldService {
+
+	public String exchangeParam(JSONArray picArray){
+		JSONArray resultArray = new JSONArray();
+		System.out.println(picArray);
+		for(Object object : picArray){
+			JSONObject jsonObject = JSONObject.parseObject( object.toString());
+			JSONObject resultJson = exchange(DeptVO.class,jsonObject);
+			resultArray.add(resultJson);
+		}
+		
+		
+		return resultArray.toString();
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	public JSONObject exchange(Class<?> targetCls, JSONObject jsonObject){
+		Field[] targetFields = targetCls.getDeclaredFields();
+        JSONObject target = new JSONObject();
+        
+        for (Field field : targetFields) {
+        	ElementField elementField = field.getAnnotation(ElementField.class);
+            if (null == elementField) continue;
+
+            // 属性名
+            String filedName = field.getName();
+            // key
+            String key = elementField.key();
+            
+            String keyName = StringUtils.isEmpty(key) ? filedName : key;
+            
+            Object value = jsonObject.get(filedName);
+            
+            
+         // 参照是否取entity中字段, 当不需要时, 此字段有值
+            String isEntity = elementField.isEntity();
+            // 参照key
+            String reference = elementField.reference();
+
+            if (StringUtils.isEmpty(isEntity)) {
+                JSONObject entity = jsonObject.getJSONObject(filedName + "_entity");
+                if (MapUtils.isEmpty(entity)) continue;
+                value = entity.getString(reference);
+            }
+            
+            target.put(keyName, value);
+
+        }
+        
+
+		
+		return null;
+		
+	}
+	
+	
+	
+
+}

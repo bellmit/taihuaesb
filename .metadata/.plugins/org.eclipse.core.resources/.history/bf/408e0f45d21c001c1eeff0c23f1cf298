@@ -1,0 +1,8 @@
+Manifest-Version: 1.0
+Bundle-ClassPath: .
+Bundle-Version: 1.0.0
+Bundle-Name: mdm_distribute_weChat
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: mdm_distribute_weChat
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+

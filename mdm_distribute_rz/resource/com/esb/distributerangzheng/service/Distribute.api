@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="Distribute" targetNamespace="http://service.distributerangzheng.esb.com/Distribute" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:ns0="http://service.distributerangzheng.esb.com/Distribute" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+<wsdl:documentation source="eip_version">65</wsdl:documentation>
+  <wsdl:types>
+    <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://service.distributerangzheng.esb.com/Distribute"><xsd:include schemaLocation="../../../../com/esb/distributerangzheng/service/Distribute.schema"/></xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="distribute">
+    <wsdl:part name="parameters" element="ns0:distribute">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="distributeResponse">
+    <wsdl:part name="parameters" element="ns0:distributeResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="Distribute">
+<wsdl:documentation><annotation name="description">Distribute</annotation><annotation name="version">1.0.0</annotation><annotation name="oldTargetNameSpace">null</annotation></wsdl:documentation>
+    <wsdl:operation name="distribute">
+<wsdl:documentation><annotation name="name">distribute</annotation><annotation name="description">distribute</annotation></wsdl:documentation>
+      <wsdl:input message="ns0:distribute">
+    </wsdl:input>
+      <wsdl:output message="ns0:distributeResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="DistributeSOAP11Binding" type="ns0:Distribute">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" wsdl:required="true"/>
+    <wsdl:operation name="distribute">
+      <soap:operation soapAction="http://service.distributerangzheng.esb.com/Distribute/distribute" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Distribute">
+    <wsdl:port name="DistributeSOAP11port_http" binding="ns0:DistributeSOAP11Binding">
+      <soap:address location="http://localhost/eipservice/" wsdl:required="true"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

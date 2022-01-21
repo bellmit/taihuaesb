@@ -1,0 +1,5 @@
+package com.esb.distribute.service;
+
+public class PsndocVO {
+
+}

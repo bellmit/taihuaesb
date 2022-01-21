@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="GBK"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:osgi="http://www.springframework.org/schema/osgi" xmlns:af="http://www.uifda.com/eip/esb/asynframework" xmlns="http://www.springframework.org/schema/beans" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/osgi http://www.springframework.org/schema/osgi/spring-osgi.xsd http://www.uifda.com/eip/esb/asynframework http://www.uifda.com/eip/esb/asynframework/scheduler.xsd">
+  <bean id="processDefCreator" class="com.ufida.eip.pvmengine.ProcessCreator"></bean>
+  <bean id="processDef" factory-bean="processDefCreator" factory-method="createProcessDef">
+    <property name="name" value="com_esb_distribute_flow_DistributeSRM"></property>
+    <property name="version" value="3"></property>
+    <property name="sub" value="false"></property>
+    <property name="useTX" value="false"></property>
+    <property name="persist" value="false"></property>
+    <property name="description" value="DistributeSRM"></property>
+    <property name="activityDefList">
+      <list>
+        <ref bean="node1"></ref>
+      </list>
+    </property>
+  </bean>
+  <bean id="flow.service.binding" class="com.ufida.eip.comp.service.support.FlowComponentServiceImpl">
+    <property name="bindingMap">
+      <map>
+        <entry key="REST">
+          <bean class="com.ufida.eip.rest.service.RestServiceBinding">
+            <property name="serviceDefinition">
+              <bean class="com.ufida.eip.rest.service.RestServiceDefinition">
+                <property name="methodDefinitonList">
+                  <list>
+                    <bean class="com.ufida.eip.comp.definition.service.api.abs.MethodDefinition">
+                      <property name="methodName" value="distribute"></property>
+                      <property name="path" value="distribute"></property>
+                      <property name="httpMethod" value="POST"></property>
+                      <property name="wrapperInputParamDefinition">
+                        <bean class="com.ufida.eip.comp.definition.service.api.abs.WrapperInputParamDefinition">
+                          <property name="wrapperName" value="参数"></property>
+                          <property name="paramDefinition">
+                            <list>
+                              <bean class="com.ufida.eip.comp.definition.service.api.abs.ParamDefinition">
+                                <property name="fullclassname" value="java.lang.String"></property>
+                                <property name="paramName" value="data"></property>
+                                <property name="annotationparamtype" value="BODY"></property>
+                                <property name="annotationparamName" value="data"></property>
+                                <property name="consumes" value="JSON"></property>
+                                <property name="methodName" value="distribute"></property>
+                              </bean>
+                              <bean class="com.ufida.eip.comp.definition.service.api.abs.ParamDefinition">
+                                <property name="fullclassname" value="java.lang.String"></property>
+                                <property name="paramName" value="mdType"></property>
+                                <property name="annotationparamName" value="mdType"></property>
+                                <property name="consumes" value="TEXT"></property>
+                                <property name="methodName" value="distribute"></property>
+                              </bean>
+                            </list>
+                          </property>
+                        </bean>
+                      </property>
+                      <property name="wrapperOutputParamDefinition">
+                        <bean class="com.ufida.eip.comp.definition.service.api.abs.WrapperOutputParamDefinition">
+                          <property name="wrapperName" value="返回参数"></property>
+                          <property name="outputParam">
+                            <bean class="com.ufida.eip.comp.definition.service.api.abs.OutputParamDefinition">
+                              <property name="outputfullclassname" value="java.lang.String"></property>
+                              <property name="outputName" value="returnArg"></property>
+                              <property name="produces" value="TEXT"></property>
+                              <property name="methodName" value="distribute"></property>
+                            </bean>
+                          </property>
+                        </bean>
+                      </property>
+                    </bean>
+                  </list>
+                </property>
+                <property name="url" value="/distributeSRMMO"></property>
+                <property name="fullclassname" value="DistributeSRM"></property>
+                <property name="mediaType" value="xml"></property>
+                <property name="asynHandle" value="false"></property>
+                <property name="saveOriginalData" value="false"></property>
+                <property name="controled" value="true"></property>
+                <property name="operationConfigMap">
+                  <map>
+                    <entry key="distribute">
+                      <bean class="com.ufida.eip.arg.service.support.DefaultServiceConfig">
+                        <property name="foldArgs" value="false"></property>
+                        <property name="serviceFoldArgConfig">
+                          <bean class="com.ufida.eip.arg.service.support.DefaultServiceArgConfig">
+                            <property name="argName" value="arg0"></property>
+                            <property name="transportType" value="NODATA"></property>
+                            <property name="transportFormat" value="OBJECT"></property>
+                            <property name="defaultValue" value=""></property>
+                            <property name="charSet" value="UTF-8"></property>
+                            <property name="atomType" value="true"></property>
+                            <property name="uapmark" value="false"></property>
+                            <property name="uapArgConfStr" value=""></property>
+                          </bean>
+                        </property>
+                        <property name="serviceArgConfigList">
+                          <list>
+                            <bean class="com.ufida.eip.arg.service.support.DefaultServiceArgConfig">
+                              <property name="argName" value="mdType"></property>
+                              <property name="transportType" value="NODATA"></property>
+                              <property name="transportFormat" value="TEXT"></property>
+                              <property name="defaultValue" value=""></property>
+                              <property name="charSet" value="UTF-8"></property>
+                              <property name="atomType" value="true"></property>
+                              <property name="uapmark" value="false"></property>
+                              <property name="uapArgConfStr" value=""></property>
+                            </bean>
+                            <bean class="com.ufida.eip.arg.service.support.DefaultServiceArgConfig">
+                              <property name="argName" value="data"></property>
+                              <property name="transportType" value="NODATA"></property>
+                              <property name="transportFormat" value="TEXT"></property>
+                              <property name="defaultValue" value=""></property>
+                              <property name="charSet" value="UTF-8"></property>
+                              <property name="atomType" value="true"></property>
+                              <property name="uapmark" value="false"></property>
+                              <property name="uapArgConfStr" value=""></property>
+                            </bean>
+                          </list>
+                        </property>
+                        <property name="serviceReturnConfig">
+                          <bean class="com.ufida.eip.arg.service.support.DefaultServiceReturnConfig">
+                            <property name="transportFormat" value="TEXT"></property>
+                          </bean>
+                        </property>
+                      </bean>
+                    </entry>
+                  </map>
+                </property>
+              </bean>
+            </property>
+          </bean>
+        </entry>
+      </map>
+    </property>
+    <property name="serviceEndpointMap">
+      <map>
+        <entry key="distribute">
+          <bean class="com.ufida.eip.comp.service.support.DefaultServiceEndpoint">
+            <property name="transactionType" value="ANY"></property>
+            <property name="transactionOperationType" value="PROPAGATION_NOT_SUPPORTED"></property>
+          </bean>
+        </entry>
+      </map>
+    </property>
+    <property name="serviceName" value="com.esb.distribute.service.DistributeSRM"></property>
+    <property name="version" value="1.0.0"></property>
+    <property name="wsdlPath" value="com/esb/distribute/service/DistributeSRM.api"></property>
+  </bean>
+  <bean id="node1" factory-bean="processDefCreator" factory-method="createAPIRouterActivity">
+    <property name="fullPath" value="com.esb.distribute.service.DistributeSRM"></property>
+    <property name="interfaceName" value="com.esb.distribute.service.DistributeSRM"></property>
+    <property name="staticFlowComponentService" ref="flow.service.binding"></property>
+    <property name="methodsUsed">
+      <list>
+        <bean factory-bean="processDefCreator" factory-method="createMethodUsedDef">
+          <property name="name" value="distribute"></property>
+        </bean>
+      </list>
+    </property>
+    <property name="targetNamespace" value="http://service.distribute.esb.com/DistributeSRM"></property>
+    <property name="initial" value="true"></property>
+    <property name="name" value="node1"></property>
+    <property name="displayName" value="DistributeSRM"></property>
+    <property name="x" value="64"></property>
+    <property name="y" value="141"></property>
+  </bean>
+</beans>

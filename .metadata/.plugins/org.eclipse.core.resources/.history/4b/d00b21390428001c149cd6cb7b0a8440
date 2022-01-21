@@ -1,0 +1,8 @@
+Manifest-Version: 1.0
+Bundle-ClassPath: .
+Bundle-Version: 1.0.0
+Bundle-Name: mdm_distribute_srmmoyuan
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: mdm_distribute_srmmoyuan
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+

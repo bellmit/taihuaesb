@@ -1,0 +1,25 @@
+package com.esb.distribute.service;
+
+public class DeptVO {
+	
+	@ElementField(key = "departmentcode")
+	private String code;
+	
+	@ElementField(key = "departmentname")
+	private String name;
+	
+	private String shortname;
+	
+	@ElementField(key = "orgcode")
+	private String companyCode;
+	
+
+	private String deptLevel;
+	
+	@ElementField(key = "fathercode")
+	private String parentCode;
+	
+	@ElementField(key = "enableflag")
+	private String enableState;
+
+}

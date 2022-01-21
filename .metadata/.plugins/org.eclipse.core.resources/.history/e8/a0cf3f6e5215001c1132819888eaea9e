@@ -1,0 +1,38 @@
+package com.esb.distribute.service;
+
+import org.json.JSONObject;
+
+import com.ufida.eip.core.MessageContext;
+import com.ufida.eip.exception.EIPException;
+import com.ufida.eip.java.IContextProcessor;
+
+public class Result implements IContextProcessor {
+
+	@Override
+	public String handleMessageContext(MessageContext arg0) throws EIPException {
+		// TODO Auto-generated method stub
+		
+		
+//		arg0.get();
+//		
+		String returnArg = arg0.getBody().getString("returnArg");
+		JSONObject esbJson = new JSONObject();
+		if(returnArg == null){
+			esbJson.put("success", true);
+			esbJson.put("message", "成功");
+		}else{
+			JSONObject returnArg_json = new JSONObject(returnArg);
+			esbJson.put("success", false);
+			esbJson.put("message", "分发失败："+returnArg_json.getString("result"));
+		}
+		
+		arg0.getBody().set("returnArg",esbJson.toString());
+//		JSONObject returnArg_json = new JSONObject(returnArg);
+//		
+//		System.out.println(returnArg_json);
+//		
+		
+		return null;
+	}
+
+}

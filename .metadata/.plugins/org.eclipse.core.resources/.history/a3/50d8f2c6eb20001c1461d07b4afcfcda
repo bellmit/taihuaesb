@@ -1,0 +1,24 @@
+package com.esb.distribute.service;
+
+public class PsndocVO {
+	
+	
+	@ElementField
+	private String code;
+	
+	@ElementField
+	private String name;
+	
+	@ElementField
+	private String mobile;
+	
+	@ElementField
+	private String company;
+	
+	@ElementField
+	private String dep;
+	
+	@ElementField
+	private String jobStatus;
+	
+}

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://service.distributefangzhi.esb.com/DistributeFZ" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://service.distributefangzhi.esb.com/DistributeFZ">
+    <annotation>
+        <documentation source="eip_version">65</documentation>
+        <documentation source="oldTargetNameSpace">null</documentation>
+        <documentation source="description">null</documentation>
+    </annotation>
+    <complexType name="distribute">
+        <sequence>
+            <element name="data" type="string">
+                <annotation>
+                    <documentation source="source.description">null</documentation>
+                    <documentation source="source.displayName">data</documentation>
+                    <documentation source="source.fullClassName">null</documentation>
+                    <documentation source="source.AnnotateeName">null</documentation>
+                    <documentation source="source.LENGTH"/>
+                    <documentation source="source.ifHeader">false</documentation>
+                </annotation>
+            </element>
+            <element name="mdType" type="string">
+                <annotation>
+                    <documentation source="source.description">null</documentation>
+                    <documentation source="source.displayName">mdType</documentation>
+                    <documentation source="source.fullClassName">null</documentation>
+                    <documentation source="source.AnnotateeName">null</documentation>
+                    <documentation source="source.LENGTH"/>
+                    <documentation source="source.ifHeader">false</documentation>
+                </annotation>
+            </element>
+        </sequence>
+    </complexType>
+    <element name="distribute" type="tns:distribute"/>
+    <complexType name="distributeResponse">
+        <sequence>
+            <element name="returnArg" type="string">
+                <annotation>
+                    <documentation source="source.description">null</documentation>
+                    <documentation source="source.displayName">returnArg</documentation>
+                    <documentation source="source.fullClassName">null</documentation>
+                    <documentation source="source.AnnotateeName">null</documentation>
+                    <documentation source="source.LENGTH"/>
+                    <documentation source="source.ifHeader">false</documentation>
+                </annotation>
+            </element>
+        </sequence>
+    </complexType>
+    <element name="distributeResponse" type="tns:distributeResponse"/>
+</schema>

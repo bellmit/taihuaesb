@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="Distribute" targetNamespace="http://service.distribute.esb.com/Distribute" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:ns0="http://service.distribute.esb.com/Distribute" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+<wsdl:documentation source="eip_version">65</wsdl:documentation>
+  <wsdl:types>
+    <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://service.distribute.esb.com/Distribute"><xsd:include schemaLocation="../../../../com/esb/distribute/service/Distribute.schema"/></xsd:schema>
+  </wsdl:types>
+  <wsdl:portType name="Distribute">
+<wsdl:documentation><annotation name="description">Distribute</annotation><annotation name="oldTargetNameSpace">null</annotation><annotation name="version">1.0.0</annotation></wsdl:documentation>
+  </wsdl:portType>
+  <wsdl:binding name="DistributeSOAP11Binding" type="ns0:Distribute">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" wsdl:required="true"/>
+  </wsdl:binding>
+</wsdl:definitions>
